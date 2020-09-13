@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=notSoSecure
+      - POSTGRES_USER=defaultUser
+  backend:
+    image: backend
+    ports:
+      - 8000:8000
+    environment:
+      - REDIS=redis
+      - REDIS_PORT=6379
+      - DB_USERNAME=defaultUser
+      - DB_PASSWORD=notSoSecure
+      - DB_HOST=database
+    restart: unless-stopped
+  frontend:
+    image: frontend
+    ports:
+      - 5000:5000

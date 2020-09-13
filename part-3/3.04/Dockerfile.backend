@@ -1,0 +1,14 @@
+FROM node:14-slim
+
+WORKDIR /app
+
+COPY package*.json .
+RUN npm install
+COPY . .
+
+USER node-user
+RUN chown -R node-user /app
+
+EXPOSE 8000
+
+CMD ["npm", "start"]
